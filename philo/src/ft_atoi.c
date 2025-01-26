@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:50:38 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/21 15:19:37 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:44:03 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static	int	ft_isspace(int c)
 {
+	
 	if (c == '\r' || c == '\f' || c == ' ' || c == '\n' || c == '\t'
 		|| c == '\v')
 		return (1);
@@ -36,6 +37,8 @@ int	ft_atoi(const char *nptr)
 	i = 0;
 	nbr = 0;
 	sign = 1;
+	if(!nptr)
+		return (0);
 	while (ft_isspace(nptr[i]))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')

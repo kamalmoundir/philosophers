@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:29:17 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/24 19:09:04 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/01/26 14:32:53 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void 	init_table(t_table *table, char **av)
 	int i;
 	
 	i = 0;
+	
 	table->nbr_philos = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
@@ -29,11 +30,11 @@ void 	init_table(t_table *table, char **av)
 	table->start_time = ft_get_time();
 	table->all_threads_created = false;
 	table->end_time = false;
-	mutex_handl(&table->table_mutex, INIT);
-	table->end_time	= false;
 	table->forks = malloc_safe((table->nbr_philos)*sizeof(pthread_mutex_t));
+	table->print_status = malloc_safe(sizeof(pthread_mutex_t));
 	table->philos = malloc_safe((table->nbr_philos)*sizeof(t_philo));
 	mutex_handl(&table->table_mutex, INIT);
+	mutex_handl(table->print_status, INIT);
 	while(i < table->nbr_philos)
 	{
 		mutex_handl(&table->forks[i],INIT);
@@ -54,8 +55,8 @@ void assign_forks(t_table *table, int pos)
 void init_philo(t_table *table)
 {	
 	int i;
-	t_philo *array_philo;
 	i = 0;
+	
 	while(i < table->nbr_philos)
 	{
 		table->philos[i].id = i + 1;

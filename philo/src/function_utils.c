@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 12:26:52 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/24 18:00:09 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/01/26 14:17:31 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ uint64_t	ft_get_time(void)
 	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
 }
 
-void	*malloc_safe(size_t data_byte)
+void 	*malloc_safe(size_t data_byte)
 {
-	size_t	result;
+	size_t	*result;
 
 	result = malloc(data_byte);
 	if (!result)
@@ -44,19 +44,48 @@ void	*malloc_safe(size_t data_byte)
 
 void	mutex_handl(pthread_mutex_t *mtx, t_orders order)
 {
+	int	ret;
+
+	// Validar el puntero del mutex
+	if (mtx == NULL)
+	{
+		error_inputs("Error: NULL mutex pointer");
+		return;
+	}
+
+	// Ejecutar la orden correspondiente
 	if (order == INIT)
-		pthread_mutex_init(mtx, NULL);
-	else if (order == UNLOCK)
-		pthread_mutex_unlock(mtx);
+	{
+		
+		if ((ret = pthread_mutex_init(mtx, NULL)))
+			{error_inputs("Error: Failed to initialize mutex");return;}	
+	}
 	else if (order == LOCK)
-		pthread_mutex_lock(mtx);
+	{
+		ret = pthread_mutex_lock(mtx);
+		if (ret != 0)
+			error_inputs("Error: Failed to lock mutex");
+	}
+	else if (order == UNLOCK)
+	{
+		ret = pthread_mutex_unlock(mtx);
+		if (ret != 0)
+			error_inputs("Error: Failed to unlock mutex");
+	}
 	else if (order == DESTROY)
-		pthread_attr_destroy(mtx);
+	{
+		ret = pthread_mutex_destroy(mtx);
+		if (ret != 0)
+			error_inputs("Error: Failed to destroy mutex");
+	}
 	else
-		error_inputs("Error in mutex handling");
+	{
+		error_inputs("Error: Invalid mutex handling order");
+	}
 }
 
-int	thread_handl(pthread_t thread, t_orders order, void *(*routine(void *)),
+
+int	thread_handl(pthread_t *thread, t_orders order, void *(routine(void *)),
 		void *data)
 {
 	if (order == CREATE)
@@ -66,12 +95,12 @@ int	thread_handl(pthread_t thread, t_orders order, void *(*routine(void *)),
 	}
 	else if (order == DETACH)
 	{
-		if (pthread_detach(thread))
+		if (pthread_detach(*thread))
 			return (error_inputs("Error: Failed to detach thread\n"), 1);
 	}
 	else if (order == JOIN)
 	{
-		if (pthread_join(thread, NULL))
+		if (pthread_join(*thread, NULL))
 			return (error_inputs("Error: Failed to join thread\n"), 1);
 	}
 	return (0);
@@ -92,7 +121,3 @@ void	cleanup(t_table *table)
 	free(table->philos);
 }
 
-void *philo_routine(void *arg)
-{
-	
-}

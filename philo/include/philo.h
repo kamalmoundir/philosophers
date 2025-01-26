@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:11:22 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/24 19:22:03 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:11:53 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void					init_table(t_table *table, char **av);
 uint64_t				ft_get_time(void);
 void					ft_usleep(uint64_t time_sleep);
 void					error_inputs(char *str);
-int						thread_handl(pthread_t thread, t_orders order,
-							void *(*routine(void *)), void *data);
+int						thread_handl(pthread_t *thread, t_orders order,
+							void *(routine(void *)), void *data);
 void					mutex_handl(pthread_mutex_t *mtx, t_orders order);
 void					*malloc_safe(size_t data_byte);
 void					assign_forks(t_table *table, int pos);
