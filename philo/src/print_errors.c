@@ -6,13 +6,13 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:56:06 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/23 20:19:48 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:29:21 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
-void error_inputs(char *str)
+void	error_inputs(char *str)
 {
-   printf(RED "%s\n" RESET,str); 
+	printf(RED "%s\n" RESET, str);
 }

@@ -6,26 +6,24 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:50:38 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/01/26 12:44:03 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:33:48 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-    
-#include "../include/philo.h"
+#include "philo.h"
 
-static	int	ft_isspace(int c)
+static int	ft_isspace(int c)
 {
-	
 	if (c == '\r' || c == '\f' || c == ' ' || c == '\n' || c == '\t'
 		|| c == '\v')
 		return (1);
 	return (0);
 }
-int ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
-    if (c >= '0' && c <= '9')
-        return (1);
-    return (0);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
 
 int	ft_atoi(const char *nptr)
@@ -37,7 +35,7 @@ int	ft_atoi(const char *nptr)
 	i = 0;
 	nbr = 0;
 	sign = 1;
-	if(!nptr)
+	if (!nptr)
 		return (0);
 	while (ft_isspace(nptr[i]))
 		i++;
@@ -56,18 +54,18 @@ int	ft_atoi(const char *nptr)
 	return (nbr * sign);
 }
 
-int is_digit_nbr(char *av)
+int	is_digit_nbr(char *av)
 {
 	int i;
-	i=0;
-	
-	while(av[i])
+	i = 0;
+
+	while (av[i])
 	{
-		if(av[i] < '0' || av[i] > '9')
+		if (av[i] < '0' || av[i] > '9')
 		{
 			return (0);
 		}
-			i ++;
+		i++;
 	}
 	return (1);
 }
