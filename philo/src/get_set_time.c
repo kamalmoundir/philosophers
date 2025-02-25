@@ -1,47 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters_setters.c                                  :+:      :+:    :+:   */
+/*   get_set_time.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 13:10:24 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 19:59:28 by kmoundir         ###   ########.fr       */
+/*   Created: 2025/02/25 19:53:16 by kmoundir          #+#    #+#             */
+/*   Updated: 2025/02/25 20:03:01 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_bool(pthread_mutex_t *mutx, bool *dest, bool value)
+void	set_time_val(pthread_mutex_t *mutx, uint64_t *dest, uint64_t value)
 {
 	mutex_handl(mutx, LOCK);
 	*dest = value;
 	mutex_handl(mutx, UNLOCK);
 }
 
-bool	get_bool(pthread_mutex_t *mutx, bool *dest)
+uint64_t	get_time_val(pthread_mutex_t *mutx, uint64_t dest)
 {
-	bool	value;
+	uint64_t	value;
 
 	mutex_handl(mutx, LOCK);
-	value = *dest;
-	mutex_handl(mutx, UNLOCK);
-	return (value);
-}
-
-void	set_int(pthread_mutex_t *mutx, int *dest, int value)
-{
-	mutex_handl(mutx, LOCK);
-	*dest = value;
-	mutex_handl(mutx, UNLOCK);
-}
-
-int	get_int(pthread_mutex_t *mutx, int *dest)
-{
-	int	value;
-
-	mutex_handl(mutx, LOCK);
-	value = *dest;
+	value = dest;
 	mutex_handl(mutx, UNLOCK);
 	return (value);
 }

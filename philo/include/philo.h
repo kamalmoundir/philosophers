@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:11:22 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/01 17:57:49 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:20:22 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 
-typedef enum phulo_status
+typedef enum philo_status
 {
 	philo_eating,
 	philo_sleeping,
@@ -126,7 +126,7 @@ void					set_int(pthread_mutex_t *mutx, int *dest, int value);
 bool					get_bool(pthread_mutex_t *mutx, bool *dest);
 void					set_bool(pthread_mutex_t *mutx, bool *dest, bool value);
 void					*philospher_routine(void *arg);
-void					start_dinner(t_table *table);
+void					*start_dinner(t_table *table);
 void					init_philo(t_table *table);
 void					cleanup(t_table *table);
 void					wait_to_be_ready(t_table *table);
@@ -140,5 +140,7 @@ bool					simulation_end(t_table *table);
 void					*monitor_routine(void *arg);
 void					desynchronize_philo(t_philo *philo);
 bool					check_all_philos_full(t_table *table);
+void					case_no_meals(t_philo *philo);
+void					only_philo(t_table *table);
 
 #endif

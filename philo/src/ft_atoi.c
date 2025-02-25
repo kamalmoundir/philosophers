@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:50:38 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/01 20:33:48 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:47:32 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	ft_isspace(int c)
 		return (1);
 	return (0);
 }
+
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -56,9 +57,9 @@ int	ft_atoi(const char *nptr)
 
 int	is_digit_nbr(char *av)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	while (av[i])
 	{
 		if (av[i] < '0' || av[i] > '9')

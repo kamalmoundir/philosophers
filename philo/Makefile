@@ -1,12 +1,12 @@
 NAME = philo
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -lpthread
+CFLAGS = -Wall -Wextra -Werror -g -lpthread 
 
 SRC_DIR = src/
 OBJ_DIR = obj/
 SRC_FILES = ft_atoi.c parse.c philo.c function_utils.c print_errors.c \
 dinner_simulation.c getters_setters.c init_data.c synchornization.c print.c \
-monitor.c
+monitor.c get_set_time.c cases.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))

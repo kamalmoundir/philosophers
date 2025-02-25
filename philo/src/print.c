@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:14:49 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/24 22:13:07 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:01:20 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	print_status(t_philo *philo, t_philo_status status)
 	uint64_t	timestamp;
 
 	if (get_bool(philo->table->print_status, &philo->table->end_time))
-	{
-		//  mutex_handl(philo->table->print_status, UNLOCK);
 		return ;
-	}
 	mutex_handl(philo->table->print_status, LOCK);
 	start_sim = get_time_val(&philo->table->table_mutex,
 			philo->table->start_time);
@@ -41,4 +38,21 @@ void	print_status(t_philo *philo, t_philo_status status)
 	else if (status == philo_full)
 		printf("%ld %d is full\n", timestamp, philo->id);
 	mutex_handl(philo->table->print_status, UNLOCK);
+}
+
+void	cleanup(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nbr_philos)
+	{
+		pthread_mutex_destroy(&table->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&table->table_mutex);
+	free(table->print_status);
+	free(table->forks);
+	free(table->philos);
+	free(table->monitor);
 }

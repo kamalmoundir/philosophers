@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:29:17 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/24 21:27:32 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/25 19:43:31 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,8 @@ void	init_table(t_table *table, char **av)
 		mutex_handl(&table->forks[i++], INIT);
 }
 
-/*void assign_forks(t_table *table, int pos)
-{
-	if(table->philos[pos].id % 2 == 0)
-	{
-		table->philos[pos].left_fork = &table->forks[pos];
-		table->philos[pos].right_fork = &table->forks[(pos + 1)
-			% table->nbr_philos];
-	}
-	else
-	{
-		table->philos[pos].right_fork = &table->forks[pos];
-		table->philos[pos].left_fork = &table->forks[(pos + 1)
-			% table->nbr_philos];
-	}
-}*/
 void	assign_forks(t_table *table, int pos)
 {
-	// Give priority to philosopher 1
 	if (table->philos[pos].id == 1)
 	{
 		table->philos[pos].left_fork = &table->forks[pos];
@@ -66,9 +50,9 @@ void	assign_forks(t_table *table, int pos)
 	}
 	else if (table->philos[pos].id % 2 == 0)
 	{
-		table->philos[pos].left_fork = &table->forks[pos];
 		table->philos[pos].right_fork = &table->forks[(pos + 1)
 			% table->nbr_philos];
+		table->philos[pos].left_fork = &table->forks[pos];
 	}
 	else
 	{
