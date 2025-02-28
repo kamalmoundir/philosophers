@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:35:04 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 20:23:51 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:11:31 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ void	*philospher_routine(void *arg)
 	desynchronize_philo(philo);
 	if (get_bool(&philo->table->table_mutex, &philo->philo_full))
 		return (NULL);
+	if(simulation_end(philo->table)) return (NULL);
 	while ((philo->table->nbr_meals > i || philo->table->nbr_meals == -1)
 		&& !simulation_end(philo->table))
 	{
 		eat_routine(philo);
 		print_status(philo, philo_sleeping);
-		ft_usleep(philo->table->time_to_sleep);
+		ft_usleep(get_time_val(&philo->table->table_mutex,philo->table->time_to_sleep),philo);
 		thinking_routine(philo);
 		if (get_bool(&philo->table->table_mutex, &philo->philo_full))
 			return (NULL);
@@ -68,16 +69,33 @@ void	*start_dinner(t_table *table)
 void	eat_routine(t_philo *philo)
 {
 	uint64_t	tmp;
-
-	mutex_handl(philo->left_fork, LOCK);
-	print_status(philo, take_left_fork);
-	mutex_handl(philo->right_fork, LOCK);
-	print_status(philo, take_right_fork);
-	set_time_val(&philo->table->table_mutex, &philo->last_eat_time,
-		ft_get_time());
+	
+	if (philo->id % 2 == 0)
+	{
+		mutex_handl(philo->right_fork, LOCK);
+		print_status(philo, take_right_fork);
+		mutex_handl(philo->left_fork, LOCK);
+		print_status(philo, take_left_fork);
+	}
+	else
+	{
+		mutex_handl(philo->left_fork, LOCK);
+		print_status(philo, take_left_fork);
+		mutex_handl(philo->right_fork, LOCK);
+		print_status(philo, take_right_fork);
+	}
 	print_status(philo, philo_eating);
+	
+	set_bool(&philo->philo_mutex, &philo->is_eating, true);
+	
+	mutex_handl(&philo->philo_mutex, LOCK);
+	set_time_val(&philo->philo_last_meal, &philo->last_eat_time,
+		ft_get_time());
+		mutex_handl(&philo->philo_mutex, UNLOCK);
+		
+		
 	tmp = get_time_val(&philo->table->table_mutex, philo->table->time_to_eat);
-	ft_usleep(tmp);
+	ft_usleep(tmp,philo);
 	if (philo->table->nbr_meals != -1)
 	{
 		philo->count_nbr_meals++;
@@ -86,15 +104,12 @@ void	eat_routine(t_philo *philo)
 			set_bool(&philo->table->table_mutex, &philo->philo_full, true);
 		}
 	}
+	set_bool(&philo->philo_mutex, &philo->is_eating, false);
 	mutex_handl(philo->right_fork, UNLOCK);
 	mutex_handl(philo->left_fork, UNLOCK);
 }
 
 void	thinking_routine(t_philo *philo)
 {
-	if (philo->table->nbr_philos % 2 != 0)
-	{
-		ft_usleep(philo->table->time_to_eat / 4);
-	}
-	print_status(philo, philo_thinking);
+	print_status(philo, philo_thinking);	
 }

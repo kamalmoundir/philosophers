@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:11:22 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 20:20:22 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:08:58 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ typedef struct s_philo
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		philo_mutex;
+	pthread_mutex_t		philo_last_meal;
 	bool				philo_full;
 	bool				philo_died;
+	bool				is_eating;
 	long				count_nbr_meals;
 	uint64_t			last_eat_time;
 	pthread_t			thread_philo;
@@ -111,7 +113,7 @@ int						is_digit_nbr(char *av);
 int						check_input(int ac, char **av);
 void					init_table(t_table *table, char **av);
 uint64_t				ft_get_time(void);
-void					ft_usleep(uint64_t time_sleep);
+void					ft_usleep(uint64_t time_sleep, t_philo *philo);
 void					error_inputs(char *str);
 int						thread_handl(pthread_t *thread, t_orders order,
 							void *(routine(void *)), void *data);

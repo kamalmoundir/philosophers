@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 17:24:30 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 17:48:40 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:10:06 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ bool	philo_died(t_philo *philo)
 
 	if (get_bool(&philo->philo_mutex, &philo->philo_full))
 		return (false);
-	last_meal = (uint64_t)get_time_val(&philo->philo_mutex,
+	
+	last_meal = (uint64_t)get_time_val(&philo->philo_last_meal,
 			philo->last_eat_time);
 	elaps_time = (uint64_t)ft_get_time() - last_meal;
-	if (elaps_time > philo->table->time_to_die)
+	if (elaps_time > get_time_val(&philo->table->table_mutex, philo->table->time_to_die))
 	{
+		if (get_bool(&philo->philo_mutex, &philo->is_eating))
+			return (false);
 		set_bool(&philo->philo_mutex, &philo->philo_died, true);
 		print_status(philo, philo_dead);
 		return (true);

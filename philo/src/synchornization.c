@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 17:41:20 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 19:44:54 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:35:20 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	increase_thread_nbr(pthread_mutex_t *mutx, int *val)
 void	desynchronize_philo(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->table->time_to_eat / 4);
+		ft_usleep(philo->table->time_to_eat / 4, philo);
 }
 
 bool	simulation_end(t_table *table)

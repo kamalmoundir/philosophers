@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:29:17 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 19:43:31 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:09:33 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ void	assign_forks(t_table *table, int pos)
 	}
 	else if (table->philos[pos].id % 2 == 0)
 	{
+		table->philos[pos].left_fork = &table->forks[pos];
 		table->philos[pos].right_fork = &table->forks[(pos + 1)
 			% table->nbr_philos];
-		table->philos[pos].left_fork = &table->forks[pos];
+		
 	}
 	else
 	{
@@ -72,10 +73,12 @@ void	init_philo(t_table *table)
 		table->philos[i].id = i + 1;
 		table->philos[i].philo_died = false;
 		table->philos[i].philo_full = false;
+		table->philos[i].is_eating = false;
 		table->philos[i].count_nbr_meals = 0;
 		table->philos[i].last_eat_time = table->start_time;
 		table->philos[i].table = table;
 		mutex_handl(&table->philos[i].philo_mutex, INIT);
+		mutex_handl(&table->philos[i].philo_last_meal, INIT);
 		assign_forks(table, i);
 		i++;
 	}

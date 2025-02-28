@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 20:06:28 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 20:24:04 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:00:51 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	case_no_meals(t_philo *philo)
 {
 	print_status(philo, philo_sleeping);
-	ft_usleep(philo->table->time_to_sleep);
+	ft_usleep(philo->table->time_to_sleep, philo);
 	thinking_routine(philo);
 }
 
 void	only_philo(t_table *table)
 {
 	print_status(&table->philos[0], take_left_fork);
-	ft_usleep(table->time_to_die);
+	ft_usleep(table->time_to_die,table->philos);
 	print_status(&table->philos[0], philo_dead);
-	mutex_handl(table->forks, UNLOCK);
+	//mutex_handl(table->forks, UNLOCK);
 }

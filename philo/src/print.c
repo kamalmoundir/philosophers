@@ -6,7 +6,7 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:14:49 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 20:01:20 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:01:00 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_status(t_philo *philo, t_philo_status status)
 	uint64_t	start_sim;
 	uint64_t	timestamp;
 
-	if (get_bool(philo->table->print_status, &philo->table->end_time))
+	if (get_bool(&philo->table->table_mutex, &philo->table->end_time))
 		return ;
 	mutex_handl(philo->table->print_status, LOCK);
 	start_sim = get_time_val(&philo->table->table_mutex,

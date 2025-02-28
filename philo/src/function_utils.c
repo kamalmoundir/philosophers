@@ -6,19 +6,21 @@
 /*   By: kmoundir <kmoundir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 12:26:52 by kmoundir          #+#    #+#             */
-/*   Updated: 2025/02/25 19:51:28 by kmoundir         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:49:10 by kmoundir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_usleep(uint64_t time_sleep)
+void	ft_usleep(uint64_t time_sleep , t_philo *philo)
 {
 	uint64_t	start;
-
+	(void)philo;
 	start = ft_get_time();
 	while ((ft_get_time() - start) < time_sleep)
 	{
+		if (get_bool(&philo->table->table_mutex, &philo->table->end_time))
+			return ;
 		usleep(100);
 	}
 }
